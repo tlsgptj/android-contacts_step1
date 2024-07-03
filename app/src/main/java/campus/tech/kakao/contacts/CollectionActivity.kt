@@ -49,7 +49,6 @@ class CollectionActivity : AppCompatActivity() {
         val sharedPreferences = getSharedPreferences("contacts", Context.MODE_PRIVATE)
         val contacts = mutableListOf<Contact>()
 
-        // Add some sample contacts
         contacts.add(Contact("John Doe", "123-456-7890", "Male", "john.doe@example.com", "Hello, world!", "1990-01-01"))
         contacts.add(Contact("Jane Smith", "987-654-3210", "Female", "jane.smith@example.com", "Hi there!", "1985-05-15"))
         contacts.add(Contact("Bob Johnson", "555-555-5555", "Male", "bob.johnson@example.com", "Howdy!", "1975-12-31"))
