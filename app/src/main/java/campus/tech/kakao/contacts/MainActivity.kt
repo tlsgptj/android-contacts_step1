@@ -37,7 +37,7 @@ class MainActivity : AppCompatActivity() {
     private val btnbirthday: Button by lazy { findViewById(R.id.birthday) }
     private val etbirthday: EditText by lazy { findViewById(R.id.birthday_1) }
     private val rgGender: RadioGroup by lazy { findViewById(R.id.Gender) }
-    private val db: AppDatabase by lazy {
+    public val db: AppDatabase by lazy {
         Room.databaseBuilder(
             applicationContext,
             AppDatabase::class.java, "PhoneCollection"
