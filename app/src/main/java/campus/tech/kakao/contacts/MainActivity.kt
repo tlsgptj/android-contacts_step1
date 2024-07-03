@@ -43,6 +43,11 @@ class MainActivity : AppCompatActivity() {
             }
             btnDeny.setOnClickListener {
                 Toast.makeText(this, "취소가 완료되었습니다.", Toast.LENGTH_SHORT).show()
+                val intent = Intent(
+                    this,
+                    CollectionActivity::class.java
+                )
+                startActivity(intent)
 
             }
             val btnbirthday: Button by lazy { findViewById(R.id.birthday) }
