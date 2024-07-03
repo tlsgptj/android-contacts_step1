@@ -13,7 +13,6 @@ import android.widget.EditText
 import android.widget.RadioButton
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import java.io.File
 
 
 class MainActivity : AppCompatActivity() {
@@ -145,19 +144,7 @@ class MainActivity : AppCompatActivity() {
 
 
         private fun writeContactsToXml(allContacts: List<Contact?>) {
-            val xml = buildString {
-                appendLine("<?xml version=\"1.0\" encoding=\"UTF-8\"?>")
-                appendLine("<contacts>")
-                for (contact in allContacts) {
-                    appendLine("    <contact>")
-                    appendLine("        <name>${contact!!.name}</name>")
-                    appendLine("    </contact>")
-                }
-                appendLine("</contacts>")
-            }
 
-            val file = File("res/layout/collection.xml")
-            file.writeText(xml)
         }
         private val etbirthday: EditText by lazy { findViewById(R.id.birthday_1) }
         private fun showDatePickerDialog() {
