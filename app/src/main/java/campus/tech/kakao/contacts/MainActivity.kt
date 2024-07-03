@@ -37,14 +37,17 @@ class MainActivity : AppCompatActivity() {
     private val btnbirthday: Button by lazy { findViewById(R.id.birthday) }
     private val etbirthday: EditText by lazy { findViewById(R.id.birthday_1) }
     private val rgGender: RadioGroup by lazy { findViewById(R.id.Gender) }
-    lateinit var db: AppDatabase
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-        db = Room.databaseBuilder(
+    private val db: AppDatabase by lazy {
+        Room.databaseBuilder(
             applicationContext,
             AppDatabase::class.java, "PhoneCollection"
         ).build()
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
         btnsave.setOnClickListener {
             saveContact()
             Toast.makeText(this, "저장이 완료되었습니다.", Toast.LENGTH_SHORT).show()
