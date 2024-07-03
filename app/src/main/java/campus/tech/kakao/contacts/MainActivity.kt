@@ -30,7 +30,7 @@ class MainActivity : AppCompatActivity() {
                 Toast.makeText(this, "저장이 완료되었습니다.", Toast.LENGTH_SHORT).show()
                 val intent = Intent(
                     this,
-                    CollectionActivity::class.java
+                    Collection::class.java
                 )
                 startActivity(intent)
 
@@ -40,7 +40,7 @@ class MainActivity : AppCompatActivity() {
                 Toast.makeText(this, "취소가 완료되었습니다.", Toast.LENGTH_SHORT).show()
                 val intent = Intent(
                     this,
-                    CollectionActivity::class.java
+                    Collection::class.java
                 )
                 startActivity(intent)
 
@@ -95,7 +95,7 @@ class MainActivity : AppCompatActivity() {
                     Toast.makeText(this, "연락처가 저장되었습니다.", Toast.LENGTH_SHORT).show()
                     val intent = Intent(
                         this,
-                        CollectionActivity::class.java
+                        Collection::class.java
                     )
                     startActivity(intent)
                 }
@@ -104,7 +104,7 @@ class MainActivity : AppCompatActivity() {
                 Toast.makeText(this, "정확한 값을 입력해주세요", Toast.LENGTH_SHORT).show()
                 val intent = Intent(
                     this,
-                    CollectionActivity::class.java
+                    Collection::class.java
                 )
                 startActivity(intent)
             }
