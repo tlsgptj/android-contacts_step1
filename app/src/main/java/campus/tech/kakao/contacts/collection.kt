@@ -33,7 +33,7 @@ class ContactAdapter(private val contacts: List<Contact>) : RecyclerView.Adapter
             itemView.setOnClickListener {
                 contacts[adapterPosition]?.let { contact ->
                     val intent = Intent(itemView.context, WhoamiActivity::class.java).also {
-                        nameTextView
+                        nameTextView.visibility
                     }
                     itemView.context.startActivity(intent)
                 }
