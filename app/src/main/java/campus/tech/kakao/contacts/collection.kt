@@ -1,5 +1,6 @@
 package campus.tech.kakao.contacts
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -13,22 +14,8 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.room.Entity
-import androidx.room.PrimaryKey
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
-@Entity(tableName = "contacts")
 data class Contact(
-    @PrimaryKey(autoGenerate = true) val id: Int = 0,
-    val contactData: ContactData
-)
-
-@Entity(tableName = "contact_data")
-data class ContactData(
-    @PrimaryKey(autoGenerate = true) val id: Int = 0,
     val name: String,
     val phone: String,
     val gender: String,
@@ -37,21 +24,18 @@ data class ContactData(
     val birthday: String
 )
 
-class ContactAdapter(private val contacts: List<MainActivity.Contact>) : RecyclerView.Adapter<ContactAdapter.ViewHolder>() {
+class ContactAdapter(private val contacts: List<Contact>) : RecyclerView.Adapter<ContactAdapter.ViewHolder>() {
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val nameTextView: TextView = itemView.findViewById(R.id.name)
         val phoneTextView: TextView = itemView.findViewById(R.id.phone)
-
-        init {
-            itemView.setOnClickListener {
-                val contact = contacts[adapterPosition]
-                val intent = Intent(itemView.context, WhoamiActivity::class.java).also {
-                    //it.putExtra("홍길동", 010-4695-6924)
-                }
-                itemView.context.startActivity(intent)
+        val contact = contacts[adapterPosition]?.also {
+            val intent = Intent(itemView.context, WhoamiActivity::class.java).also {
+                it.putExtra("contact", it)
             }
+            itemView.context.startActivity(intent)
         }
+
 
     }
 
@@ -69,21 +53,15 @@ class ContactAdapter(private val contacts: List<MainActivity.Contact>) : Recycle
     override fun getItemCount() = contacts.size
 }
 
-private fun Intent.putExtra(s: String, contactData: ContactData) {
-
-}
-
 class WhoamiActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_whoam_i)
 
-        val contactData = intent.data.toString()
     }
 }
 
 class CollectionActivity : AppCompatActivity() {
-    private lateinit var db: MainActivity.AppDatabase
     private lateinit var tvmessage: TextView
     private lateinit var recyclerView: RecyclerView
     private lateinit var contactAdapter: ContactAdapter
@@ -102,7 +80,6 @@ class CollectionActivity : AppCompatActivity() {
 
         recyclerView = findViewById(R.id.recyclerView)
         recyclerView.layoutManager = LinearLayoutManager(this)
-        db = MainActivity.AppDatabase.getInstance(this)
         loadContacts()
         showMessage()
 
@@ -113,22 +90,34 @@ class CollectionActivity : AppCompatActivity() {
     }
 
     private fun showMessage() {
-        GlobalScope.launch {
-            val hasUsers = db.contactDao().getAllContacts().isEmpty()
-            withContext(Dispatchers.Main) {
-                tvmessage.visibility = if (hasUsers) View.GONE else View.VISIBLE
-            }
-        }
+        val contacts = getContacts()
+        tvmessage.visibility = if (contacts.isEmpty()) View.VISIBLE else View.GONE
     }
 
     private fun loadContacts() {
-        GlobalScope.launch {
-            val contacts = db.contactDao().getAllContacts()
-            withContext(Dispatchers.Main) {
-                contactAdapter = ContactAdapter(contacts)
-                recyclerView.adapter = contactAdapter
+        val contacts = getContacts()
+        contactAdapter = ContactAdapter(contacts)
+        recyclerView.adapter = contactAdapter
+    }
+
+    private fun getContacts(): List<Contact> {
+        val sharedPreferences = getSharedPreferences("contacts", Context.MODE_PRIVATE)
+        val contacts = mutableListOf<Contact>()
+
+        for (i in 0 until sharedPreferences.getInt("count", 0)) {
+            val name = sharedPreferences.getString("name$i", "")
+            val phone = sharedPreferences.getString("phone$i", "")
+            val gender = sharedPreferences.getString("gender$i", "")
+            val email = sharedPreferences.getString("email$i", "")
+            val message = sharedPreferences.getString("message$i", "")
+            val birthday = sharedPreferences.getString("birthday$i", "")
+
+            if (name != null && phone != null && gender != null && email != null && message != null && birthday != null) {
+                contacts.add(Contact(name, phone, gender, email, message, birthday))
             }
         }
+
+        return contacts
     }
 }
 

@@ -2,30 +2,25 @@ package campus.tech.kakao.contacts
 
 import android.os.Parcel
 import android.os.Parcelable
-import androidx.room.PrimaryKey
 
-data class Contactdata(
-    @PrimaryKey(autoGenerate = true) val id: Int = 0,
+data class ContactData(
     val name: String,
     val phone: String,
     val gender: String,
     val email: String,
     val message: String,
     val birthday: String
-):Parcelable {
+) : Parcelable {
     constructor(parcel: Parcel) : this(
-        parcel.readInt(),
         parcel.readString().toString(),
         parcel.readString().toString(),
         parcel.readString().toString(),
         parcel.readString().toString(),
         parcel.readString().toString(),
         parcel.readString().toString()
-    ) {
-    }
+    )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
-        parcel.writeInt(id)
         parcel.writeString(name)
         parcel.writeString(phone)
         parcel.writeString(gender)
@@ -38,12 +33,12 @@ data class Contactdata(
         return 0
     }
 
-    companion object CREATOR : Parcelable.Creator<Contactdata> {
-        override fun createFromParcel(parcel: Parcel): Contactdata {
-            return Contactdata(parcel)
+    companion object CREATOR : Parcelable.Creator<ContactData> {
+        override fun createFromParcel(parcel: Parcel): ContactData {
+            return ContactData(parcel)
         }
 
-        override fun newArray(size: Int): Array<Contactdata?> {
+        override fun newArray(size: Int): Array<ContactData?> {
             return arrayOfNulls(size)
         }
     }
