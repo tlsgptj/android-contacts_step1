@@ -1,6 +1,4 @@
-# android-contacts
--> 실수로 2단계 연락처 저장 기능을 여기다 구현해버렸습니다. 
--> activity_main.xml파일과 MainActivity.kt파일만 봐주시면 감사하겠습니다. 
+# android-contacts 
 [기능구현]
 1. 연락처와 이름, 전화번호를 입력하는 기능
 2. 저장 버튼을 누르면 저장이 완료되었다는 토스트 메세지를 볼 수 있다. 
@@ -10,8 +8,7 @@
 6. 입력하지 않았을 시 토스트 메세지 "잘못된 입력입니다"가 뜨게 한다.
 # 수정 후 기능 변화
 1. 우선 RoomDB에서 오류가 많이 나서 일단 삭제하고 SharedPreference로 구현을 했습니다.
-2. 입력까지는 잘 되고 저장도 잘 되는 것 같은데 Collection.kt이 실행이 되지 않습니다.
-3. 오류를 파악하려고 애썼지만 모르겠습니다...
-4. 에뮬레이터를 실행하려고 하면 contact keeps stopping이라는 오류가 발생하는데 이게 왜 그런지 모르겠습니다.
-5. 만약 과락하더라도 어떤 오류인지, 어떻게 하면 수정할 수 있을지 알려주시면 감사하겠습니다!
-6. 짧은시간이었지만 감사했습니다!
+2. collection_xml의 내용을 멘토님의 조언을 받아 FrameLayout에서 ConstraintLayout으로 변경하여 
+RecyclerView로 구현을 해보았습니다.
+3. collection.kt의 오류를 수정하였습니다.
+4. recyclerView와 ItemView가 collection.xml에 표시되게끔 만들었습니다.
