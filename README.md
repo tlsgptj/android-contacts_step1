@@ -1,6 +1,4 @@
-# android-contacts
--> 실수로 2단계 연락처 저장 기능을 여기다 구현해버렸습니다. 
--> activity_main.xml파일과 MainActivity.kt파일만 봐주시면 감사하겠습니다. 
+# android-contacts 
 [기능구현]
 1. 연락처와 이름, 전화번호를 입력하는 기능
 2. 저장 버튼을 누르면 저장이 완료되었다는 토스트 메세지를 볼 수 있다. 
