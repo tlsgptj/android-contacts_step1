@@ -32,9 +32,7 @@ class ContactAdapter(private val contacts: List<Contact>) : RecyclerView.Adapter
         init {
             itemView.setOnClickListener {
                 contacts[adapterPosition]?.let { contact ->
-                    val intent = Intent(itemView.context, WhoamiActivity::class.java).also {
-                        nameTextView.visibility
-                    }
+                    val intent = Intent(itemView.context, WhoamiActivity::class.java)
                     itemView.context.startActivity(intent)
                 }
             }
@@ -52,8 +50,11 @@ class ContactAdapter(private val contacts: List<Contact>) : RecyclerView.Adapter
         holder.phoneTextView.text = contact.phone
     }
 
-    override fun getItemCount() = contacts.size
+    override fun getItemCount(): Int {
+        return contacts.size
+    }
 }
+
 
 class WhoamiActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
