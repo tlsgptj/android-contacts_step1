@@ -5,8 +5,7 @@
     android:id="@+id/main"
     android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="50dp"
-    tools:context=".person">
+    android:layout_height="50dp">
 
     <ImageView
         android:layout_width="40dp"

@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.provider.ContactsContract
 import android.text.InputFilter
 import android.text.InputType
+import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.RadioButton
@@ -26,13 +27,18 @@ class MainActivity : AppCompatActivity() {
             setContentView(R.layout.activity_main)
             val btnsave: Button by lazy { findViewById(R.id.save) }
             btnsave.setOnClickListener {
+                Log.d("TAG", "onCreate: 통과")
                 saveContact()
+                Log.d("TAG", "onCreate: 통과1")
                 Toast.makeText(this, "저장이 완료되었습니다.", Toast.LENGTH_SHORT).show()
+                Log.d("TAG", "onCreate: 통과2")
                 val intent = Intent(
                     this,
                     CollectionActivity::class.java
                 )
+                Log.d("TAG", "onCreate: 통과3")
                 startActivity(intent)
+                Log.d("TAG", "onCreate: 통과4")
 
             }
             val btndeny: Button by lazy { findViewById(R.id.deny) }

@@ -4,10 +4,10 @@ import android.os.Bundle
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 
-class whoamI : AppCompatActivity() {
+class WhoAmIActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_whoam_i)
+        setContentView(R.layout.activity_who_am_iactivity)
 
         val contact = intent.getSerializableExtra("contact") as? Contact
         if (contact != null) {
@@ -18,5 +18,7 @@ class whoamI : AppCompatActivity() {
             findViewById<TextView>(R.id.memoTextView).text = contact.toString()
             findViewById<TextView>(R.id.genderTextView).text = contact.toString()
         }
+
+
+        }
     }
-}
