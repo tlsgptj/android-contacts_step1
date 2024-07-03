@@ -2,6 +2,7 @@ package campus.tech.kakao.contacts
 
 import android.app.DatePickerDialog
 import android.content.Context
+import android.content.Intent
 import android.icu.util.Calendar
 import android.os.Bundle
 import android.provider.ContactsContract
@@ -15,7 +16,7 @@ import androidx.appcompat.app.AppCompatActivity
 import java.io.File
 
 
-    class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity() {
 
         private val sharedPrefs by lazy {
             getSharedPreferences("contacts", Context.MODE_PRIVATE)
@@ -28,12 +29,22 @@ import java.io.File
             btnsave.setOnClickListener {
                 saveContact()
                 Toast.makeText(this, "저장이 완료되었습니다.", Toast.LENGTH_SHORT).show()
-                finish()
+                val intent = Intent(
+                    this,
+                    CollectionActivity::class.java
+                )
+                startActivity(intent)
+
             }
             val btndeny: Button by lazy { findViewById(R.id.deny) }
             btndeny.setOnClickListener {
                 Toast.makeText(this, "취소가 완료되었습니다.", Toast.LENGTH_SHORT).show()
-                finish()
+                val intent = Intent(
+                    this,
+                    CollectionActivity::class.java
+                )
+                startActivity(intent)
+
             }
             val btnbirthday: Button by lazy { findViewById(R.id.birthday) }
             btnbirthday.setOnClickListener {
@@ -68,7 +79,7 @@ import java.io.File
                 else -> ContactsContract.CommonDataKinds.StructuredName.DATA3
             }
 
-            if (name.isNotEmpty() && phone.isNotEmpty() && email.isNotEmpty() && message.isNotEmpty()) {
+            if (name.isNotEmpty() && phone.isNotEmpty()) {
                 val contact = Contact(
                     name = name,
                     phone = phone,
@@ -81,11 +92,22 @@ import java.io.File
                 saveContactToSharedPrefs(contact)
                 writeContactsToXml(getAllContacts())
 
-                Toast.makeText(this, "연락처가 저장되었습니다.", Toast.LENGTH_SHORT).show()
-                finish()
+                if (name.isNotEmpty()&&phone.isNotEmpty()) {
+                    Toast.makeText(this, "연락처가 저장되었습니다.", Toast.LENGTH_SHORT).show()
+                    val intent = Intent(
+                        this,
+                        CollectionActivity::class.java
+                    )
+                    startActivity(intent)
+                }
+
             } else {
                 Toast.makeText(this, "정확한 값을 입력해주세요", Toast.LENGTH_SHORT).show()
-                finish()
+                val intent = Intent(
+                    this,
+                    CollectionActivity::class.java
+                )
+                startActivity(intent)
             }
         }
 
