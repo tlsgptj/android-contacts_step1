@@ -8,7 +8,6 @@ import android.os.Bundle
 import android.provider.ContactsContract
 import android.text.InputFilter
 import android.text.InputType
-import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.RadioButton
@@ -25,30 +24,25 @@ class MainActivity : AppCompatActivity() {
         override fun onCreate(savedInstanceState: Bundle?) {
             super.onCreate(savedInstanceState)
             setContentView(R.layout.activity_main)
-            val btnsave: Button by lazy { findViewById(R.id.save) }
-            btnsave.setOnClickListener {
-                Log.d("TAG", "onCreate: 통과")
+            val btnSave: Button by lazy { findViewById(R.id.save) }
+            val btnDeny: Button by lazy { findViewById(R.id.deny) }
+            val editName : EditText by lazy { findViewById(R.id.name)}
+            val editphone : EditText by lazy { findViewById(R.id.phone)}
+            btnSave.setOnClickListener {
                 saveContact()
-                Log.d("TAG", "onCreate: 통과1")
-                Toast.makeText(this, "저장이 완료되었습니다.", Toast.LENGTH_SHORT).show()
-                Log.d("TAG", "onCreate: 통과2")
-                val intent = Intent(
-                    this,
-                    CollectionActivity::class.java
-                )
-                Log.d("TAG", "onCreate: 통과3")
-                startActivity(intent)
-                Log.d("TAG", "onCreate: 통과4")
-
+                if (editName.text.isNotEmpty()&& editphone.text.isNotEmpty()) {
+                    Toast.makeText(this, "저장이 완료되었습니다.", Toast.LENGTH_SHORT).show()
+                    val intent = Intent(
+                        this,
+                        CollectionActivity::class.java
+                    )
+                    startActivity(intent)
+                } else {
+                    Toast.makeText(this, "정확한 값을 입력해주세요", Toast.LENGTH_SHORT).show()
+                }
             }
-            val btndeny: Button by lazy { findViewById(R.id.deny) }
-            btndeny.setOnClickListener {
+            btnDeny.setOnClickListener {
                 Toast.makeText(this, "취소가 완료되었습니다.", Toast.LENGTH_SHORT).show()
-                val intent = Intent(
-                    this,
-                    CollectionActivity::class.java
-                )
-                startActivity(intent)
 
             }
             val btnbirthday: Button by lazy { findViewById(R.id.birthday) }

@@ -19,8 +19,7 @@ data class Contact(
 class ContactAdapter(private val contacts: List<Contact>) : RecyclerView.Adapter<ContactAdapter.ViewHolder>() {
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        //val nameTextView: TextView = itemView.findViewById(R.id.name)
-        val phoneTextView: TextView = itemView.findViewById(R.id.phone)
+        val nameTextView: TextView = itemView.findViewById(R.id.namelist)
 
         init {
             itemView.setOnClickListener {
@@ -39,8 +38,8 @@ class ContactAdapter(private val contacts: List<Contact>) : RecyclerView.Adapter
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val contact = contacts[position]
-        //holder.nameTextView.text = contact.name
-        holder.phoneTextView.text = contact.phone
+        holder.nameTextView.text = contact.name
+
     }
 
     override fun getItemCount(): Int {
