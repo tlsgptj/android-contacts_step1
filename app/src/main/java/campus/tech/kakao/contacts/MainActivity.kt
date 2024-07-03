@@ -156,7 +156,7 @@ class MainActivity : AppCompatActivity() {
                 appendLine("</contacts>")
             }
 
-            val file = File("res/layout/activity_collection.xml")
+            val file = File("res/layout/collection.xml")
             file.writeText(xml)
         }
         private val etbirthday: EditText by lazy { findViewById(R.id.birthday_1) }
