@@ -9,6 +9,15 @@ class WhoAmIActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_who_am_iactivity)
 
+        data class Contact(
+            val name: String,
+            val phone: String,
+            val gender: String,
+            val email: String,
+            val message: String,
+            val birthday: String
+        )
+
         val contact = intent.getSerializableExtra("contact") as? Contact
         if (contact != null) {
             findViewById<TextView>(R.id.nameTextView).text = contact.toString()
