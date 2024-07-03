@@ -115,6 +115,21 @@ class MainActivity : AppCompatActivity() {
 
         abstract fun contactDao(): ContactDao
         abstract fun userDao(): UserDao
+
+        companion object {
+            private var instance: MainActivity.AppDatabase? = null
+
+            fun getInstance(collectionActivity: CollectionActivity): MainActivity.AppDatabase {
+                if (instance == null) {
+                    instance = Room.databaseBuilder(
+                        collectionActivity.applicationContext,
+                        MainActivity.AppDatabase::class.java, "PhoneCollection"
+                    ).build()
+                }
+                return instance!!
+            }
+        }
+
     }
 
     private fun setupPhoneNumberInput() {

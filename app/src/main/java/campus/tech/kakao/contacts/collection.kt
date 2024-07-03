@@ -24,17 +24,18 @@ import kotlinx.coroutines.withContext
 data class Contact(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
     val contactData: ContactData
-) {
-    data class ContactData(
-        @PrimaryKey(autoGenerate = true) val id: Int = 0,
-        val name: String,
-        val phone: String,
-        val gender: String,
-        val email: String,
-        val message: String,
-        val birthday: String
-    )
-}
+)
+
+@Entity(tableName = "contact_data")
+data class ContactData(
+    @PrimaryKey(autoGenerate = true) val id: Int = 0,
+    val name: String,
+    val phone: String,
+    val gender: String,
+    val email: String,
+    val message: String,
+    val birthday: String
+)
 
 class ContactAdapter(private val contacts: List<MainActivity.Contact>) : RecyclerView.Adapter<ContactAdapter.ViewHolder>() {
 
@@ -44,12 +45,14 @@ class ContactAdapter(private val contacts: List<MainActivity.Contact>) : Recycle
 
         init {
             itemView.setOnClickListener {
+                val contact = contacts[adapterPosition]
                 val intent = Intent(itemView.context, WhoamiActivity::class.java).also {
-                    it.putExtra("contact", contacts[adapterPosition].name)
+                    //it.putExtra("홍길동", 010-4695-6924)
                 }
                 itemView.context.startActivity(intent)
             }
         }
+
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -66,7 +69,7 @@ class ContactAdapter(private val contacts: List<MainActivity.Contact>) : Recycle
     override fun getItemCount() = contacts.size
 }
 
-private fun Intent.putExtra(s: String, contactData: Contact.ContactData) {
+private fun Intent.putExtra(s: String, contactData: ContactData) {
 
 }
 
@@ -74,6 +77,8 @@ class WhoamiActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_whoam_i)
+
+        val contactData = intent.data.toString()
     }
 }
 
@@ -95,10 +100,9 @@ class CollectionActivity : AppCompatActivity() {
         }
         tvmessage = findViewById(R.id.message)
 
-        db = (application as MainActivity).db
-
         recyclerView = findViewById(R.id.recyclerView)
         recyclerView.layoutManager = LinearLayoutManager(this)
+        db = MainActivity.AppDatabase.getInstance(this)
         loadContacts()
         showMessage()
 
@@ -110,7 +114,7 @@ class CollectionActivity : AppCompatActivity() {
 
     private fun showMessage() {
         GlobalScope.launch {
-            val hasUsers = db.userDao().getAllUsers().isEmpty()
+            val hasUsers = db.contactDao().getAllContacts().isEmpty()
             withContext(Dispatchers.Main) {
                 tvmessage.visibility = if (hasUsers) View.GONE else View.VISIBLE
             }
