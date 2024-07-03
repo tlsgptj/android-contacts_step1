@@ -116,7 +116,9 @@ class CollectionActivity : AppCompatActivity() {
                 contacts.add(Contact(name, phone, gender, email, message, birthday))
             }
         }
-
+        contacts.add(Contact("John Doe", "123-456-7890", "Male", "john.doe@example.com", "Hello, world!", "1990-01-01"))
+        contacts.add(Contact("Jane Smith", "987-654-3210", "Female", "jane.smith@example.com", "Hi there!", "1985-05-15"))
+        contacts.add(Contact("Bob Johnson", "555-555-5555", "Male", "bob.johnson@example.com", "Howdy!", "1975-12-31"))
         return contacts
     }
 }
