@@ -85,6 +85,7 @@ import java.io.File
                 finish()
             } else {
                 Toast.makeText(this, "정확한 값을 입력해주세요", Toast.LENGTH_SHORT).show()
+                finish()
             }
         }
 
