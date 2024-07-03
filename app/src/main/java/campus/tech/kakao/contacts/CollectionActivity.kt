@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
+import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -49,12 +50,51 @@ class CollectionActivity : AppCompatActivity() {
         val sharedPreferences = getSharedPreferences("contacts", Context.MODE_PRIVATE)
         val contacts = mutableListOf<Contact>()
 
-        contacts.add(Contact("John Doe", "123-456-7890", "Male", "john.doe@example.com", "Hello, world!", "1990-01-01"))
-        contacts.add(Contact("Jane Smith", "987-654-3210", "Female", "jane.smith@example.com", "Hi there!", "1985-05-15"))
-        contacts.add(Contact("Bob Johnson", "555-555-5555", "Male", "bob.johnson@example.com", "Howdy!", "1975-12-31"))
+        val nameSet = sharedPreferences.getStringSet("names", emptySet())
+        val phoneSet = sharedPreferences.getStringSet("phones", emptySet())
+        val genderSet = sharedPreferences.getStringSet("genders", emptySet())
+        val emailSet = sharedPreferences.getStringSet("emails", emptySet())
+        val noteSet = sharedPreferences.getStringSet("notes", emptySet())
+        val birthdaySet = sharedPreferences.getStringSet("birthdays", emptySet())
+
+        nameSet?.forEach { name ->
+            val index = nameSet.indexOf(name)
+            contacts.add(
+                Contact(
+                    name,
+                    phoneSet?.elementAtOrNull(index) ?: "",
+                    genderSet?.elementAtOrNull(index) ?: "",
+                    emailSet?.elementAtOrNull(index) ?: "",
+                    noteSet?.elementAtOrNull(index) ?: "",
+                    birthdaySet?.elementAtOrNull(index) ?: ""
+                )
+            )
+        }
+
+        val nameEditText: EditText = findViewById(R.id.name)
+        val phoneEditText: EditText = findViewById(R.id.phone)
+        val newContact = Contact(
+            nameEditText.text.toString(),
+            phoneEditText.text.toString(),
+            "", // Gender
+            "", // Email
+            "", // Note
+            "" // Birthday
+        )
+        contacts.add(newContact)
+
+        val editor = sharedPreferences.edit()
+        editor.putStringSet("names", contacts.map { it.name }.toMutableSet())
+        editor.putStringSet("phones", contacts.map { it.phone }.toMutableSet())
+        editor.putStringSet("genders", contacts.map { it.gender }.toMutableSet())
+        editor.putStringSet("emails", contacts.map { it.email }.toMutableSet())
+        editor.putStringSet("notes", contacts.map { it.message }.toMutableSet())
+        editor.putStringSet("birthdays", contacts.map { it.birthday }.toMutableSet())
+        editor.apply()
+
+        contactAdapter.notifyDataSetChanged()
         return contacts
     }
-
 
     private fun enableEdgeToEdge() {
         // Implement edge-to-edge functionality
